@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace SnakeGame
 {
-    class Food
+    public class Food
     {
-        public double x,y;
-        public Ellipse ell = new Ellipse();
-        public Food(double x,double y)
+        public double CoordinateX,CoordinateY;
+        public readonly Ellipse Ellipse = new Ellipse();
+        public Food(double coordinateX,double coordinateY)
         {
-            this.x = x;
-            this.y = y;
+            this.CoordinateX = coordinateX;
+            this.CoordinateY = coordinateY;
         }
-        public void setfoodposition()
+        public void SetPosition()
         {
-            ell.Width = ell.Height = 10;
-            ell.Fill = Brushes.Blue;
-            Canvas.SetLeft(ell, x);
-            Canvas.SetTop(ell,y);
+            Ellipse.Width = Ellipse.Height = 10;
+            Ellipse.Fill = Brushes.Blue;
+            Canvas.SetLeft(Ellipse, CoordinateX);
+            Canvas.SetTop(Ellipse,CoordinateY);
         }
     }
 }

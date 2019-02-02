@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -12,19 +6,19 @@ namespace SnakeGame
 {
     class Snake
     {
-        public double x, y;
-        public Rectangle rec = new Rectangle();
-        public Snake(double x,double y)
+        public double CoordinateX, CoordinateY;
+        public readonly Rectangle Rectangle = new Rectangle();
+        public Snake(double coordinateX,double coordinateY)
         {
-            this.x = x;
-            this.y = y;
+            CoordinateX = coordinateX;
+            CoordinateY = coordinateY;
         }
-        public void setsnakeposition()
+        public void SetSnakePosition()
         {
-            rec.Width = rec.Height = 10;
-            rec.Fill = Brushes.Red;
-            Canvas.SetLeft(rec, x);
-            Canvas.SetTop(rec, y);
+            Rectangle.Width = Rectangle.Height = 10;
+            Rectangle.Fill = Brushes.Red;
+            Canvas.SetLeft(Rectangle, CoordinateX);
+            Canvas.SetTop(Rectangle, CoordinateY);
         }
     }
 }

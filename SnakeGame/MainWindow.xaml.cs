@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Unity;
 
 namespace SnakeGame
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         DispatcherTimer time;
@@ -27,15 +16,19 @@ namespace SnakeGame
         Random rd = new Random();
         double x = 100;
         double y = 100;
-        int direction = 0;
+        int direction;
         int left = 4;
         int right = 6;
         int up = 8;
         int down = 2;
-        int score = 0;
-        int count = 0;
-        public MainWindow()
+        int score;
+        int count;
+        
+        [Dependency]
+        private IFoodManager _foodManager { get; set; }
+        public MainWindow(IFoodManager foodManager)
         {
+            _foodManager = foodManager;
             InitializeComponent();
             time = new DispatcherTimer();
             snakebody = new List<Snake>();
@@ -48,8 +41,8 @@ namespace SnakeGame
 
         void addfoodincanvas()
         {
-            food[0].setfoodposition();
-            mycanvas.Children.Insert(0,food[0].ell);
+            food[0].SetPosition();
+            mycanvas.Children.Insert(0,food[0].Ellipse);
         }
 
 
@@ -57,8 +50,8 @@ namespace SnakeGame
         {
             foreach (Snake snake in snakebody)
             {
-                snake.setsnakeposition();
-                mycanvas.Children.Add(snake.rec);
+                snake.SetSnakePosition();
+                mycanvas.Children.Add(snake.Rectangle);
             }
         }
 
@@ -84,9 +77,9 @@ namespace SnakeGame
                 x += 10;
 
 
-            if(snakebody[0].x== food[0].x && snakebody[0].y== food[0].y)
+            if(snakebody[0].CoordinateX== food[0].CoordinateX && snakebody[0].CoordinateY== food[0].CoordinateY)
             {
-                snakebody.Add(new Snake(food[0].x, food[0].y));
+                snakebody.Add(new Snake(food[0].CoordinateX, food[0].CoordinateY));
                 food[0] = new Food(rd.Next(0, 37) * 10, rd.Next(0, 35) * 10);
                 mycanvas.Children.RemoveAt(0);
                 addfoodincanvas();
@@ -97,16 +90,16 @@ namespace SnakeGame
 
             snakebody[0] = new Snake(x, y);
 
-            if(snakebody[0].x>370 || snakebody[0].y>350 || snakebody[0].x<0 || snakebody[0].y<0)
+            if(snakebody[0].CoordinateX>370 || snakebody[0].CoordinateY>350 || snakebody[0].CoordinateX<0 || snakebody[0].CoordinateY<0)
             {
-                this.Close();
+                Close();
             }
 
 
             for (int i = 1; i < snakebody.Count;i++ )
             {
-                if (snakebody[0].x == snakebody[i].x && snakebody[0].y == snakebody[i].y)
-                    this.Close();
+                if (snakebody[0].CoordinateX == snakebody[i].CoordinateX && snakebody[0].CoordinateY == snakebody[i].CoordinateY)
+                    Close();
             }
 
 
